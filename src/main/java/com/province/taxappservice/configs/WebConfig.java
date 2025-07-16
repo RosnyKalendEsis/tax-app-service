@@ -9,7 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-                .addResourceHandler("/signatures/**")
-                .addResourceLocations("file:./signatures/");
+                .addResourceHandler("/signatures/**","/rapports/**")
+                .addResourceLocations("file:./signatures/","file:./reports/");
     }
 }

@@ -1,9 +1,6 @@
 package com.province.taxappservice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +23,17 @@ public class Note {
     private String periode;
     private boolean valide;
     private String signature;
+    private LocalDate expiration;
+    private boolean isExpired;
     @ManyToOne
     private Inspection inspection;
+
+    @PrePersist
+    @PreUpdate
+    public void checkIfExpired() {
+        if (expiration != null) {
+            this.isExpired = expiration.isBefore(LocalDate.now());
+        }
+    }
 }
 

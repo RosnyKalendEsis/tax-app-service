@@ -47,23 +47,28 @@ public class InspectionController {
         return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
     }
 
+    @PutMapping("/valider")
+    public ResponseEntity<Inspection> validerRapport(@RequestBody Inspection i) {
+        return ResponseEntity.ok(service.create(i));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping(path = "/valider",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Inspection valider(@RequestPart("data") String data,
-                                                                @RequestPart("signature") MultipartFile file) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-
-        Inspection inspection = objectMapper.readValue(data, Inspection.class);
-
-        String savedFileName = imageStorageService.save(file, "inspection");
-        inspection.setSignature(savedFileName);
-        return service.create(inspection);
-    }
+//    @PostMapping(path = "/valider",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public Inspection valider(@RequestPart("data") String data,
+//                                                                @RequestPart("signature") MultipartFile file) throws JsonProcessingException {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.registerModule(new JavaTimeModule());
+//        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+//
+//        Inspection inspection = objectMapper.readValue(data, Inspection.class);
+//
+//        String savedFileName = imageStorageService.save(file, "inspection");
+//        inspection.setSignature(savedFileName);
+//        return service.create(inspection);
+//    }
 }

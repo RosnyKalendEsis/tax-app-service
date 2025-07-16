@@ -48,6 +48,11 @@ public class NoteController {
         return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
     }
 
+    @PutMapping("/valider")
+    public ResponseEntity<Note> validerNote(@RequestBody Note n) {
+        return ResponseEntity.ok(service.create(n));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
         service.delete(id);

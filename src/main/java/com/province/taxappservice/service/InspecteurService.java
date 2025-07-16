@@ -27,6 +27,7 @@ public class InspecteurService {
         return repository.save(i);
     }
 
+
     public Inspecteur update(String id, Inspecteur i) {
         return repository.findById(id).map(existing -> {
             existing.setNom(i.getNom());
